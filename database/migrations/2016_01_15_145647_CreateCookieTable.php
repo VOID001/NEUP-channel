@@ -16,6 +16,7 @@ class CreateCookieTable extends Migration
             $table->increments('id');
             $table->string('cookie');
             $table->string('short_cookie');
+            $table->integer('state');
             $table->timestamps();
         });
     }
