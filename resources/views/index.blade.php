@@ -19,7 +19,7 @@
             @if(!isset($firstLogin) && Cookie::get('neupchan') === NULL)
                 <div class="alert alert-warning">No Cookie Available now QAQ</div>
             @elseif(isset($firstLogin))
-                <div class="alert alert-success">Now you have a cookie~~~ Welcome to NEUP-@Channel</div>
+                <div class="alert alert-success">Now you have a cookie~~~ Welcome to NEUP-@Channel Please Refresh this page</div>
             @else
                 <div class="alert alert-success">
                     Welcome! ~ Your CookieID:{{ $shortCookie }}

@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\UserController;
 use App\User;
 use App\Contents;
 use App\Subjects;
 use App\Categories;
+use App\ChCookie;
 
 class ContentController extends Controller
 {
@@ -63,12 +66,40 @@ class ContentController extends Controller
 
     public function postSubject(Request $request, $cat_id)
     {
-
+        $data =$request->all();
+        $vdtor = Validator::make($data, [
+            'content' => 'required|min:15'
+        ]);
+        if($vdtor->fails())
+            return Redirect::to("/cat/$cat_id")->withErrors($vdtor);
+        $tmpCookie = $request->cookie('neupchan');
+        $data['cookie'] = $request->cookie('neupchan');
+        $cookieObj = ChCookie::where('cookie', $tmpCookie->cookie)->first();
+        $userObj = User::where('cookie_id', $cookieObj->id)->first();
+        $contentObj = new Contents();
+        $contentObj->content = $data['content'];
+        $contentObj->po_id = $userObj->id;
+        $contentObj->save();
+        //var_dump($contentObj);
+        Contents::find($contentObj->content_id)->update([
+            'subject_id' => $contentObj->content_id
+        ]);
+        $subjectObj = new Subjects();
+        $subjectObj->subject_id = $contentObj->id;
+        $subjectObj->cat_id = $cat_id;
+        $subjectObj->last_reply_time = time();
+        $subjectObj->po_id = $userObj->id;
+        $subjectObj->save();
+        //var_dump($subjectObj);
+        return Redirect::to("/cat/$cat_id")->with('post', 1);
     }
 
     public function getContentByCatID(Request $request, $cat_id)
     {
         $page_id = $request->get('p');
-        
+        $catObj = Categories::find($cat_id);
+        $data['cat_name'] = $catObj->cat_name;
+        $data['fullContent'] = Contents::getCatgoryFullContentByPageID($cat_id, 1);
+        return View::make('catview', $data);
     }
 }
