@@ -26,7 +26,7 @@ class Contents extends Model
                 'subject_text' => $contentObj->content,
                 'subject_cookie' => $shortCookie,
                 'subject_create_time' => $subject->created_at,
-                'subject_img' => '',     //Leave it for future use
+                'subject_img' => $contentObj->image,     //Leave it for future use
                 'contents' => [],
             ];
             $contentObj = Contents::where(
@@ -42,7 +42,7 @@ class Contents extends Model
                     'content_text' => $content->content,
                     'content_cookie' => $shortCookie,
                     'content_create_time' => $content->created_at,
-                    'content_img' => '',        //Leave it blank for future support
+                    'content_img' => $content->image        //Leave it blank for future support
                 ];
                 array_push($tmpArr['contents'], $tmpContent);
             }

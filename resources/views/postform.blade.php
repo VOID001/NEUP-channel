@@ -6,14 +6,14 @@
             </th>
             </thead>
             <tbody>
-            <form method="POST" action = "{{ Request::server('REQUEST_URI') }}"class="form-control">
+            <form method="POST" action = "{{ Request::server('REQUEST_URI') }}"class="form-control" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <tr>
                     <td>
-                        Post your content(At least 15 chars)
+                        Post your content<br/><strong>(At least 15 chars)</strong>
                     </td>
                     <td>
-                        <textarea name="content"> </textarea>
+                        <textarea name="content" style="height: 100px;width: 350px"> </textarea>
                     </td>
                 </tr>
                 <tr>

@@ -32,7 +32,9 @@
                         <div class="panel-body col-lg-9">
                             {{ $subject['subject_text'] }}
                         </div>
-                            <img src="" style="width:250px; height:150px"/>
+                            @if($subject['subject_img'] != '')
+                                <a href="/images/{{ $subject['subject_img'] }}"><img title="Click to see full-size picture" src="/images/{{ $subject['subject_img'] }}" style="width:250px; height:150px"/></a>
+                            @endif
                             <br/>
                             <br/>
                             @foreach($subject['contents'] as $content)

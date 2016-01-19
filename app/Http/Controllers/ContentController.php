@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Contents;
 use App\Subjects;
@@ -68,7 +69,8 @@ class ContentController extends Controller
     {
         $data =$request->all();
         $vdtor = Validator::make($data, [
-            'content' => 'required|min:15'
+            'content' => 'required|min:15',
+            'file' => 'image|max:2048',
         ]);
         if($vdtor->fails())
             return Redirect::to("/cat/$cat_id")->withErrors($vdtor);
@@ -79,6 +81,18 @@ class ContentController extends Controller
         $contentObj = new Contents();
         $contentObj->content = $data['content'];
         $contentObj->po_id = $userObj->id;
+        $uploadFile = $request->file('file');
+        if($uploadFile)
+        {
+            if(!$uploadFile->isValid())
+                return Redirect::to("/cat/$cat_id")->withErrors($uploadFile->getErrorMessage());
+            var_dump($uploadFile);
+            $fileName = $uploadFile->getRealPath() . $request->cookie('neupchan')->cookie . time();
+            $fileName = md5($fileName) . "." . $uploadFile->guessExtension();
+            echo $fileName;
+            $contentObj->image = $fileName;
+            Storage::put('images/' . $fileName, file_get_contents($uploadFile->getRealPath()));
+        }
         $contentObj->save();
         //var_dump($contentObj);
         Contents::find($contentObj->content_id)->update([
@@ -101,5 +115,14 @@ class ContentController extends Controller
         $data['cat_name'] = $catObj->cat_name;
         $data['fullContent'] = Contents::getCatgoryFullContentByPageID($cat_id, 1);
         return View::make('catview', $data);
+    }
+
+    public function getImage(Request $request, $image_hash)
+    {
+        $file = Storage::get('images/'. $image_hash);
+        $mimeType = Storage::mimeType('images/' . $image_hash);
+        $response = \Illuminate\Support\Facades\Response::make($file, 200);
+        $response->header("Content-Type", $mimeType);
+        return $response;
     }
 }

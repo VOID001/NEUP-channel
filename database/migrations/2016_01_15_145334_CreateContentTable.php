@@ -16,6 +16,7 @@ class CreateContentTable extends Migration
             $table->increments('content_id');
             $table->integer('subject_id');
             $table->longText('content');
+            $table->text('image');
             $table->integer('po_id');
             $table->timestamps();
         });

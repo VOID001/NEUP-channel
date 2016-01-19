@@ -39,3 +39,6 @@ Route::get('/admin', [
     "uses" => "AdminController@getAdminIndex"
 ]);
 
+Route::get('/images/{image_hash}', [
+    "uses" => "ContentController@getImage"
+]);
