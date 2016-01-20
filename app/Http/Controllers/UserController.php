@@ -15,6 +15,15 @@ class UserController extends Controller
 
     }
 
+    public function checkAccess(Request $request)
+    {
+        $userCookie = $request->cookie('neupchan');
+        if($userCookie === NULL) return -1;
+        $channelCookie = ChCookie::where('cookie', $userCookie->cookie)->where('state', 1)->first();
+        if($channelCookie === NULL) return -1;
+        return 1;
+    }
+
     public function checkCookie(Request $request)
     {
         $userCookie = $request->cookie('neupchan');
@@ -53,7 +62,6 @@ class UserController extends Controller
     public function giveCookie(Request $request, $cookieID)
     {
         $cookieObj = ChCookie::find($cookieID);
-        echo "Giving Cookie $cookieID out<br/>";
         $infoArr = [
             "cookie_id" => $cookieObj->id,
             "first_login_ip" => $request->ip(),

@@ -20,7 +20,8 @@ Route::get('/cat/{cat_id}/subject/{sub_id}', [
 ]);
 
 Route::post('/cat/{cat_id}/subject/{sub_id}', [
-    "uses" => "ContentController@postContent"
+    "uses" => "ContentController@postContent",
+    "middleware" => "chancookie"
 ]);
 
 Route::get('/cat/{cat_id}', [
@@ -28,7 +29,8 @@ Route::get('/cat/{cat_id}', [
 ]);
 
 Route::post('/cat/{cat_id}', [
-    "uses" => "ContentController@postSubject"
+    "uses" => "ContentController@postSubject",
+    "middleware" => "chancookie"
 ]);
 
 Route::get('/search', [

@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Choose a Picture
+                        Choose a Picture<br/><strong>(should smaller than 4MB)</strong>
                     </td>
                     <td>
                         <input type="file" name="file"/>

@@ -23,25 +23,24 @@
             @foreach($fullContent as $subject)
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        [Reply] [View] {{$subject['subject_create_time']}}
+                        <a href="{{ Request::server('REQUEST_URI') }}/subject/{{ $subject['subject_id'] }}"><span class="label-primary label" style="font-size: 15px">[Reply]</span></a>
+                        {{$subject['subject_create_time']}}
+                        Cookie:{{ $subject['subject_cookie'] }}
                         <span class="col-lg-offset-8">
-                            Cookie:{{ $subject['subject_cookie'] }}
+                            No.{{ $subject['subject_id'] }}
                         </span>
                     </div>
                     <div class="container">
                         <div class="panel-body col-lg-9">
                             {{ $subject['subject_text'] }}
-                        </div>
-                            @if($subject['subject_img'] != '')
-                                <a href="/images/{{ $subject['subject_img'] }}"><img title="Click to see full-size picture" src="/images/{{ $subject['subject_img'] }}" style="width:250px; height:150px"/></a>
-                            @endif
+                            <br/>
                             <br/>
                             <br/>
                             @foreach($subject['contents'] as $content)
-                            <div class="col-lg-9">
+                            <div class="col-lg-10">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
-                                        [Reply] [View]
+                                        <a href="subject/{{ $subject['subject_id'] }}">[Reply]</a>
                                         <span class="col-lg-offset-7">
                                             Cookie:myQBHM1
                                         </span>
@@ -52,7 +51,12 @@
                                 </div>
                             </div>
                             @endforeach
-                    </div>
+
+                        </div>
+                            @if($subject['subject_img'] != '')
+                                <a href="/images/{{ $subject['subject_img'] }}"><img title="Click to see full-size picture" src="/images/{{ $subject['subject_img'] }}" style="max-width:250px; height:auto"/></a>
+                            @endif
+                   </div>
                 </div>
             @endforeach
         </div>

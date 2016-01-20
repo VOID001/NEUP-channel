@@ -70,7 +70,7 @@ class ContentController extends Controller
         $data =$request->all();
         $vdtor = Validator::make($data, [
             'content' => 'required|min:15',
-            'file' => 'image|max:2048',
+            'file' => 'image|max:4096',
         ]);
         if($vdtor->fails())
             return Redirect::to("/cat/$cat_id")->withErrors($vdtor);

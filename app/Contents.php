@@ -19,7 +19,7 @@ class Contents extends Model
         {
             $contentObj = Contents::where('content_id', $subject->subject_id)->first();
             $userObj = User::find($subject->po_id);
-            $cookieObj = ChCookie::where('id', $userObj->id)->first();
+            $cookieObj = ChCookie::where('id', $userObj->cookie_id)->first();
             $shortCookie = $cookieObj->short_cookie;
             $tmpArr = [
                 'subject_id' => $contentObj->content_id,
