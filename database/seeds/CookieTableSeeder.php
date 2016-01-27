@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 
 use App\ChCookie;
 
@@ -13,6 +14,7 @@ class CookieTableSeeder extends Seeder
      */
     public function run()
     {
+        Model::unguard();
         $charTblStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $charTbl = [];
         for($i = 0; $i < 10; $i++)
@@ -37,5 +39,6 @@ class CookieTableSeeder extends Seeder
             ]);
         }
         echo "Seeded 10 more cookies into the database\n";
+        Model::reguard();
     }
 }

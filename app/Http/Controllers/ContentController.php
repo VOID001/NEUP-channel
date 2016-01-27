@@ -79,7 +79,7 @@ class ContentController extends Controller
         $cookieObj = ChCookie::where('cookie', $tmpCookie->cookie)->first();
         $userObj = User::where('cookie_id', $cookieObj->id)->first();
         $contentObj = new Contents();
-        $contentObj->content = $data['content'];
+        $contentObj->content = nl2br($data['content']);
         $contentObj->po_id = $userObj->id;
         $uploadFile = $request->file('file');
         if($uploadFile)

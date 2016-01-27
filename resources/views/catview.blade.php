@@ -32,7 +32,7 @@
                     </div>
                     <div class="container">
                         <div class="panel-body col-lg-9">
-                            {{ $subject['subject_text'] }}
+                            {!! $subject['subject_text'] !!}
                             <br/>
                             <br/>
                             <br/>
